@@ -1,13 +1,41 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    activemodel (4.2.4)
+      activesupport (= 4.2.4)
+      builder (~> 3.1)
+    activerecord (4.2.4)
+      activemodel (= 4.2.4)
+      activesupport (= 4.2.4)
+      arel (~> 6.0)
+    activesupport (4.2.4)
+      i18n (~> 0.7)
+      json (~> 1.7, >= 1.7.7)
+      minitest (~> 5.1)
+      thread_safe (~> 0.3, >= 0.3.4)
+      tzinfo (~> 1.1)
+    addressable (2.4.0)
+    arel (6.0.3)
+    builder (3.2.2)
+    crack (0.4.3)
+      safe_yaml (~> 1.0.0)
+    hashdiff (0.3.0)
+    i18n (0.7.0)
+    json (1.8.3)
     minitest (5.9.0)
+    safe_yaml (1.0.4)
+    thread_safe (0.3.5)
+    tzinfo (1.2.2)
+      thread_safe (~> 0.1)
+    webmock (2.0.2)
+      addressable (>= 2.3.6)
+      crack (>= 0.3.2)
+      hashdiff
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
+  activerecord
   minitest
-
-BUNDLED WITH
-   1.11.2
+  webmock
