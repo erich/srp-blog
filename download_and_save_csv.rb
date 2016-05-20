@@ -4,6 +4,7 @@
 require 'net/http'
 require 'active_record'
 require 'csv'
+require 'pry'
 
 class DownloadAndSaveCSV
   attr_reader :url
@@ -14,8 +15,13 @@ class DownloadAndSaveCSV
 
   def call
     csv_data = Net::HTTP.get(url)
-    CSV.parse(csv_data) do |row|
-      Item.create(name: row.first)
+    begin
+      options = { col_sep: ",", quote_char:'"' }
+      CSV.parse(csv_data, options) do |row|
+        Item.create(name: row.first)
+      end
+      rescue NoMethodError => e
+        # notify airbrake
     end
   end
 end
