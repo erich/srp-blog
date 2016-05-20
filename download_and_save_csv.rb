@@ -15,14 +15,7 @@ class DownloadAndSaveCSV
 
   def call
     csv_data = Net::HTTP.get(url)
-    begin
-      options = { col_sep: ",", quote_char:'"' }
-      CSV.parse(csv_data, options) do |row|
-        Item.create(name: row.first)
-      end
-      rescue NoMethodError => e
-        # notify airbrake
-    end
+    ParseAndStoreCSV.new(csv_data).call
   end
 end
 
@@ -32,4 +25,24 @@ ActiveRecord::Base.establish_connection(
 )
 
 class Item < ActiveRecord::Base
+end
+
+class ParseAndStoreCSV
+  attr_reader :csv
+
+  def initialize(csv)
+    @csv = csv
+  end
+
+  def call
+    begin
+      options = { col_sep: ",", quote_char:'"' }
+      CSV.parse(csv, options) do |row|
+        Item.create(name: row.first)
+      end
+    rescue NoMethodError => e
+      # notify airbrake
+    end
+  end
+
 end
